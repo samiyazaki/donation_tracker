@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .thermometer {
+            width: 50px;
+            height: 300px;
+            border: 2px solid #000;
+            border-radius: 25px;
+            margin: 0 auto;
+            position: relative;
+            background-color: #fff;
+        }
+        .thermometer-fill {
+            width: 100%;
+            height: 0;
+            background-color: red;
+            border-radius: 25px 25px 25px 25px;
+            position: absolute;
+            bottom: 0;
+        }
+        .goal {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        .donation-input {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Donation Tracker</h1>
+    <div class="goal">Goal: $103,000</div>
+    <div class="thermometer">
+        <div class="thermometer-fill" id="thermometer-fill"></div>
+    </div>
+    <div class="goal">Raised: $<span id="raised-amount">0</span></div>
+    <div class="donation-input">
+        <input type="number" id="donation-amount" placeholder="Enter donation amount">
+        <button onclick="addDonation()">Donate</button>
+    </div>
+
+    <script>
+        const goalAmount = 103000;
+        let raisedAmount = 0;
+
+        function addDonation() {
+            const donationInput = document.getElementById('donation-amount');
+            const donationAmount = parseInt(donationInput.value);
+
+            if (isNaN(donationAmount) || donationAmount <= 0) {
+                alert('Please enter a valid donation amount.');
+                return;
+            }
+
+            raisedAmount += donationAmount;
+            updateThermometer();
+            donationInput.value = '';
+        }
+
+        function updateThermometer() {
+            const thermometerFill = document.getElementById('thermometer-fill');
+            const raisedAmountElem = document.getElementById('raised-amount');
+            const fillPercentage = Math.min((raisedAmount / goalAmount) * 100, 100);
+
+            thermometerFill.style.height = fillPercentage + '%';
+            raisedAmountElem.textContent = raisedAmount;
+        }
+    </script>
+
+</body>
+</html>
